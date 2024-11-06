@@ -1,0 +1,31 @@
+-- Lumber Tycoon 2 - Script de Corte Automático de Árvores
+-- Coloque este script no GitHub e carregue-o no jogo para usá-lo.
+-- Aviso: Utilize este script apenas para aprendizado e não para ganhar vantagem injusta no jogo.
+
+-- Função para detectar e cortar automaticamente árvores
+local function cortarArvore(arvore)
+    if arvore and arvore:FindFirstChild("WoodSection") then
+        for _, section in pairs(arvore.WoodSection:GetChildren()) do
+            if section:IsA("Part") then
+                -- Corta a árvore ao reduzir a saúde da seção da madeira
+                section:Destroy()
+            end
+        end
+        print("Árvore cortada com sucesso!")
+    else
+        print("Não foi possível encontrar uma árvore válida.")
+    end
+end
+
+-- Detecta cliques do jogador e aplica a função de corte de árvore
+local Player = game.Players.LocalPlayer
+local Mouse = Player:GetMouse()
+
+Mouse.Button1Down:Connect(function()
+    local target = Mouse.Target
+    if target and target.Parent and target.Parent:FindFirstChild("WoodSection") then
+        cortarArvore(target.Parent)
+    end
+end)
+
+print("Script de Corte Automático de Árvores carregado com sucesso.")
